@@ -9,8 +9,8 @@ class DiceTest {
         Die d1 = new Die;
         Die d2 = new Die;
 
-        var distribution = new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-        var theoreticalDistribution = new double[] {0.0277778, 0.0555556, 0.0833333, 0.111111, 0.138889, 0.1666667, 0.138889, 0.111111, 0.0833333, 0.0555556, 0.0277778};
+        var distribution = new Double[11];
+        var theoreticalDistribution = new double[] {1/36, 2/36, 3/36, 4/36, 5/36, 6/36, 5/36, 4/36, 3/36, 2/36, 1/36};
 
         for (var i = 0; i == TOTALROLLS; i++) {
             d1.roll();
@@ -36,8 +36,7 @@ class DiceTest {
         for (var i = 0; i < distribution.length; i++) {
             distribution[i] = distribution[i]/TOTALROLLS
         }
-
-        assertArrayEquals(actualDistribution, distribution)
+        assertArrayEquals(actualDistribution, distribution);
     }
 
     @Test
@@ -70,7 +69,7 @@ class DiceTest {
 
         d1.roll();
         var roll1 = d1.getFace();
-        
+
         d2.roll();
         var roll2 = d2.getFace();
     }
