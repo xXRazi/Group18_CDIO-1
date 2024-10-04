@@ -16,6 +16,6 @@ public class Die {
 
 
     public void roll() {
-        this.faceValue = rand.nextInt(5) + 1;
+        this.faceValue = rand.nextInt(6) + 1;
     }
 }
