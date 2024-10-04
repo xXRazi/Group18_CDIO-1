@@ -2,7 +2,7 @@ import java.util.Random;
 
 
 public class Die {
-    private Random rand;
+    private final Random rand;
     private int faceValue;
 
     public Die() {
@@ -16,6 +16,6 @@ public class Die {
 
 
     public void roll() {
-        this.faceValue = rand.nextInt(5) + 1;
+        this.faceValue = rand.nextInt(6) + 1;
     }
 }
