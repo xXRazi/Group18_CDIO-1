@@ -18,12 +18,13 @@ class DiceTest {
         int roll1;
         int roll2;
         var finalArray = new double[11];
+        // Using BigDecimal here to round down to two digits
         BigDecimal[] distribution = new BigDecimal[11];
         Arrays.fill(distribution, BigDecimal.ZERO);
         BigDecimal divisor = new BigDecimal(TOTALROLLS);
         BigDecimal increment = new BigDecimal(1);
 
-       
+        // Theoretical distrution of the sum of two die from https://www.omnicalculator.com/statistics/dice
         var theoreticalDistribution = new double[] {0.027, 0.055, 0.083, 0.111, 0.138, 0.166, 0.138, 0.111, 0.083, 0.055, 0.027};
 
         for (var i = 0; i < TOTALROLLS; i++) {
@@ -45,7 +46,7 @@ class DiceTest {
                 case 12 -> distribution[10] = distribution[10].add(increment);
             }
         }
-        
+        // Copying over to finalArray because assertArrayEquals doesn't accept BigDecimal
         for (var i = 0; i < finalArray.length; i++) {
             distribution[i] = distribution[i].divide(divisor).setScale(3, RoundingMode.DOWN);
             finalArray[i] = distribution[i].doubleValue();
@@ -55,11 +56,12 @@ class DiceTest {
 
     @Test
     void equalsTest() {
-        int TOTALROLLS = 10000000;
+        int TOTALROLLS = 100000000;
         Die d1 = new Die();
         Die d2 = new Die();
         int roll1;
         int roll2;
+        // Same as above
         BigDecimal amountEquals = new BigDecimal(0);
         BigDecimal divisor = new BigDecimal(TOTALROLLS);
         BigDecimal increment = new BigDecimal(1);
@@ -80,6 +82,7 @@ class DiceTest {
         assertEquals(theoreticalAmount, amountEquals.doubleValue());
     }
 
+    //Using JUnit's Timeout annotation to check whether the code inside the test runs in under 333 ms
     @Test
     @Timeout(value = 333,unit = TimeUnit.MILLISECONDS)
     void performanceTest() {
