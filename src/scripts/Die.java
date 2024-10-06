@@ -7,6 +7,7 @@ public class Die {
 
     public Die() {
         this.rand = new Random();
+        this.faceValue = rand.nextInt(6) + 1;
     }
 
 

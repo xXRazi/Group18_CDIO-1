@@ -15,31 +15,31 @@ public class DiceGame {
     public void play() {
         boolean hasPlayerWon = false; 
         while (true) {
-            if (hasPlayerWon) {
-                gameEnds(player2, player1);
-                break;
-            }
-
+            // Player 1 turn
             hasPlayerWon = playerTurn(player1);
-
             if (hasPlayerWon) {
                 gameEnds(player1, player2);
                 break;
             }
 
+            // Player 2 turn
             hasPlayerWon = playerTurn(player2);
-        }
-
-        
+            if (hasPlayerWon) {
+                gameEnds(player2, player1);
+                break;
+            }
+        }        
     }
 
 
+    // Rolls dice
     private void rollDice() {
         die1.roll();
         die2.roll();
     }
 
 
+    // Controls what happens after a player has rolled
     private boolean logic(Player player, int die1_value, int die2_value) {
         boolean isPlayerWon = false;
         boolean isEqual = die1_value == die2_value;
@@ -47,7 +47,9 @@ public class DiceGame {
         
         printDice(die1_value, die2_value, score);
 
+        // Controls what happens if the dice is a par
         if (isEqual) {
+            // Checks if dice is a par of 1's
             if (die1_value == 1 && die2_value == 1) {
                 player.SetScore(0);
             }
@@ -56,12 +58,15 @@ public class DiceGame {
             }
 
             printScore(player);
-            if (player.getScore() >= 40) {
+            // Checks if player won
+            if ((player.getScore() - score) >= 40) {
                 isPlayerWon = true;
             }
+            // Rolls dice again because there was rolled a par
             else {
                 rollDice();
                 
+                // Checks if there was rolled a par of 6 two times in a row
                 if (die1_value == 6 && die2_value == 6) {
                     if (die1.getFace() == 6 && die2.getFace() == 6) {
                         player.addToScore(score);
@@ -75,8 +80,7 @@ public class DiceGame {
                 }
             }
         }
-
-        if (!isPlayerWon && !isEqual) {
+        else {
             player.addToScore(score);
             printScore(player);
         }
@@ -85,7 +89,8 @@ public class DiceGame {
     }
 
 
-    public void gameEnds(Player winner, Player loser) {
+    // Displays end game results
+    private void gameEnds(Player winner, Player loser) {
         System.out.println("\n---------");
         System.out.println("Game over ");
         System.out.println("---------");
@@ -95,6 +100,7 @@ public class DiceGame {
     }
 
 
+    // Controls the flow of a players turn
     private boolean playerTurn(Player player) {
         System.out.println("\n" + player.getName() + "'s turn: ");
         rollDice();
@@ -102,6 +108,7 @@ public class DiceGame {
     }
 
 
+    // Displays the dice
     private void printDice(int value1, int value2, int sum) {
         System.out.println("\tdie1: " + value1);
         System.out.println("\tdie2: " + value2);
@@ -109,6 +116,7 @@ public class DiceGame {
     }
 
     
+    // Displays a players score
     private void printScore(Player player) {
         System.out.println("\tScore: " + player.getScore());
         System.out.println("\t----------------------");
