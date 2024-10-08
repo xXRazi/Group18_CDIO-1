@@ -7,6 +7,7 @@ public class Player {
         this.playerScore = score;
     }
 
+    //test
     
     public String getName() {
         return playerName;
